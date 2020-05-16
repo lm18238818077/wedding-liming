@@ -1,0 +1,31 @@
+
+<view class="container">
+  <view class="remind-box" wx:if="{{remind}}">
+    <image class="remind-img" src="{{imageHost}}/common/loading.gif"></image>
+  </view>
+  <block wx:else>
+    <text class="title">Marry</text>
+    <view class="content">
+      <view class="hd" style="transform:rotateZ({{angle}}deg);">
+        <image class="logo" src="{{imageHost}}/logo.jpg"></image>
+        <image class="wave" src="{{imageHost}}/common/wave.png" mode="aspectFill"></image>
+        <image class="wave wave-bg" src="{{imageHost}}/common/wave.png" mode="aspectFill"></image>
+      </view>
+      <view class='datetime' animation="{{animationData}}">
+        <view class='box'>
+            <view class="name css13610f7ae66601">
+                <span class="fl">李明</span>
+                <span class="and">&</span>
+                <span class="fr ">温瑞</span>
+            </view>
+            <view class="date css13610f7ae66601">
+                <view>谨定于 2018年10月1日</view>
+                <view>农历 2018年八月二十二 举办婚礼</view>
+                <view>恭请您的光临</view>
+            </view>
+        </view>
+    </view>
+      <button class="confirm-btn" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" > 进入婚礼 </button>
+    </view>
+  </block>
+</view>

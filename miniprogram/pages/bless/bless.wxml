@@ -1,0 +1,92 @@
+<!--pages/bless/index.wxml-->
+<view class="container">
+  
+  <scroll-view class="content" scroll-y="true">
+  <view class="title" wx:if="{{zanLog.length > 0}}">已收到 {{zanLog.length}} 位好友的祝福</view>
+  <view class="title" wx:else> 点击下方按钮可送上祝福 </view>
+
+  <view class="friends">
+    <view class="face" wx:for="{{zanLog}}" wx:key="user"><image src="{{item.avatarUrl}}" /></view>
+  </view>
+  <view class="btn_zone">
+      <button type="primary" bindtap='zan'>送上祝福</button>
+      <button type="default" open-type="share" class="share">分享</button>
+  </view>
+
+  <view wx:if="{{chatList.length > 0}}" class="chat_list_wrap">
+    <view class="chat_list" wx:for="{{chatList}}" wx:key="user">
+      <view class="chat_face">
+        <image src="{{item.avatarUrl}}" />
+      </view>
+      <view class="chat_words">
+        <view class="chat_meta">
+          <text class="chat_user">{{item.nickName}}</text>
+          <text class="chat_date">{{item.time}}</text>
+        </view>
+        <view class="comment">
+          <block wx:for="{{item.comment}}" wx:key="*this" wx:for-item="item2">
+            <block wx:if="{{item2.type === 1}}">{{item2.content}}</block>
+            <view wx:if="{{item2.type === 2}}" style="display: inline-block; width: {{lineHeight}}px; height: {{lineHeight}}px">
+              <view 
+                class="{{item2.imageClass}}"
+                style="background-image: url({{emojiSource}});transform-origin: 0 0; transform: scale({{lineHeight / 64}});">
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:else>
+    <view class="befirst">
+      <image src="/images/lovemail.gif" />
+    </view>
+  </view>
+
+  <view class="reply_wrp" style="bottom: {{keyboardHeight}}px">
+  <view class="reply_tool">
+    <view hover-class="active" class="reply_button replay_quick_button">
+      <image src="./images/reply_tool_keyboard.svg" mode='aspectFit' class="reply_tool_pic"></image>
+    </view>
+    <view class="reply_form_wrp">
+      <label for="" class="reply_label">
+        <input 
+          class="reply_input" 
+          cursor-spacing="8px" 
+          confirm-type="send" 
+          adjust-position="{{false}}" 
+          confirm-hold value="{{comment}}" 
+          cursor="{{cursor}}" 
+          focus="{{focus}}" 
+          hold-keyboard="true"
+          bindblur="onBlur" 
+          bindfocus="onFocus" 
+          bindinput="onInput" 
+          bindconfirm="onConfirm" 
+          bindkeyboardheightchange="onkeyboardHeightChange"
+        />
+      </label>
+    </view>
+    <view hover-class="active" class="reply_button replay_emotion_button" bindtap="showEmoji">
+      <image src="./images/reply_tool_emoji.svg" mode='aspectFit' class="reply_tool_pic"></image>
+    </view>
+  </view>
+  <view class="reply_panel_wrp" style="height: {{emojiShow ? 300 : 200}}px;" hidden="{{!emojiShow && !functionShow}}">
+    <view class="reply_panel {{emojiShow ? 'show': ''}}" hidden="{{!emojiShow}}">
+      <mp-emoji source="{{emojiSource}}" class="mp-emoji" bindinsertemoji="insertEmoji" binddelemoji="deleteEmoji" bindsend="onsend" show-history="{{false}}"></mp-emoji>
+    </view>
+    <view class="reply_panel {{functionShow ? 'show': ''}}" hidden="{{!functionShow}}">
+      <swiper indicator-dots="{{true}}" indicator-color="#bbbbbb" indicator-active-color="#8c8c8c">
+        <swiper-item>
+          <view class="function_list">
+            <view class="function_item" bindtap="chooseImage">
+              <image src="./images/reply_function_image.svg" class="reply_function_pic"></image>
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+</view>
+</scroll-view>
+</view>
