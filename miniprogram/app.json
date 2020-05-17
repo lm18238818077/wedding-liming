@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/bless/bless",
-
     "pages/index/index",
+    "pages/bless/bless",
+    "pages/bless/blessDetail/blessDetail",
     "pages/home/home",
     "pages/map/map",  
     "pages/home/gridview/gridview"

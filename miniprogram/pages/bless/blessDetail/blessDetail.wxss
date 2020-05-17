@@ -1,0 +1,23 @@
+/* pages/bless/blessDetail/blessDetail.wxss */
+
+.face {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 10rpx;
+}
+.face image {
+  width: 100rpx;
+  height: 100rpx;
+}
+.friends {
+  width: 600rpx;
+  margin: 0 auto;
+  margin-top: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+.title {
+  text-align: center;
+  font-size: 30rpx;
+  line-height: 60rpx;
+}

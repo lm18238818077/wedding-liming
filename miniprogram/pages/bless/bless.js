@@ -1,6 +1,7 @@
 var api = require('../../api/api.js')
 const app = getApp()
 const {imageHost} = api
+import { getNowTime } from '../../utils/utils'
 
 Page({
 
@@ -11,12 +12,16 @@ Page({
     userInfo: {},
     chatList: [],
     zanLog: [],
+    current: 0,
+    more:true,
+    limit: 20,
     lineHeight: 24,
     functionShow: false,
     emojiShow: false,
     comment: '',
     focus: false,
     cursor: 0,
+    keyboardHeight: 0,
     _keyboardShow: false,
     emojiSource: imageHost +'common/emoji-sprite.png',
     parsedComment: []
@@ -54,44 +59,60 @@ Page({
     })
   },
 
+
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-    this.getPraiseList(),
-    this.getCommentList()
+  scrolltolower: function() {
+    const { more } = this.data
+    if(more) {
+      this.getCommentList()
+    }
   },
   // 获取评论列表
   getCommentList: function () {
+    const { limit, current, chatList } = this.data
+    wx.showLoading('loading')
     const db = wx.cloud.database()
-    db.collection('bless-list').get({
+    db.collection('bless-list').skip(limit * current).limit(limit).get({
       success: res => {
-        this.setData({
-          chatList: res.data
-        })
+        console.log(res)
+        wx.hideLoading();
+        if(res && res.data.length === 0) {
+          this.setData({
+            more: false
+          })
+        }else{
+          this.setData({
+            current: current + 1,
+            chatList: chatList.concat(res.data)
+          })
+        }
       },
       fail: err => {
         wx.showToast({
           icon: 'none',
           title: '查询记录失败'
         })
+        wx.hideLoading();
       }
     })
   },
   // 获取赞列表
   getPraiseList: function () {
-    const db = wx.cloud.database()
-    db.collection('zan-list').get({
+    wx.cloud.callFunction({
+      name: 'allzan',
+      data: {},
       success: res => {
-        wx.hideToast()
+        console.log(res.result)
         this.setData({
-          zanLog: res.data
+          zanLog: res.result.data
         })
       },
       fail: err => {
         wx.showToast({
           icon: 'none',
-          title: '查询记录失败'
+          title: '获取 赞列表 失败',
         })
       }
     })
@@ -109,7 +130,7 @@ Page({
     return {
       title: '诚意邀请你参加我们的婚礼',
       imageUrl: `${imageHost}/logo.jpg`,
-      path: "pages/splash/splash",
+      path: "pages/index/index",
       success: function (res) {
         wx.showToast({
           title: '分享成功',
@@ -168,7 +189,7 @@ Page({
     const {nickName, avatarUrl} = this.data.userInfo;
     const {chatList, parsedComment} = this.data;
     const db = wx.cloud.database()
-    const addObj = { nickName, avatarUrl, 'comment': parsedComment, 'openId': app.globalData.openId, time: new Date().toLocaleString() }
+    const addObj = { nickName, avatarUrl, 'comment': parsedComment, 'openId': app.globalData.openId, time: getNowTime() }
     db.collection('bless-list').add({
       data: addObj,
       success: res => {
@@ -193,7 +214,7 @@ Page({
     const {height} = e.detail
     console.log(height)
     this.setData({
-      keyboardHeight: height - 56
+      keyboardHeight: height - 56 > 0 ? height - 56 : 0
     })
   },
 
@@ -221,8 +242,13 @@ Page({
     this.hideAllPanel()
   },
   onBlur(e) {
+    console.log('onblue')
     this.data._keyboardShow = false
-    this.data.cursor = e.detail.cursor || 0
+    this.data.cursor = e.detail.cursor || 0;
+    this.setData({
+      keyboardHeight: 0
+    })
+
   },
   onInput(e) {
     const value = e.detail.value

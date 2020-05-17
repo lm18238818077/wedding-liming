@@ -1,0 +1,9 @@
+<!--pages/bless/blessDetail/blessDetail.wxml-->
+
+<view class="title">已收到 {{zanLog.length}} 位好友的祝福</view>
+
+<view class="friends">
+	<view class="face" wx:for="{{zanLog}}" wx:key="user">
+		<image src="{{item.avatarUrl}}" />
+	</view>
+</view>

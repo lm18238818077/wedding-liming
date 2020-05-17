@@ -3,12 +3,20 @@
   text-align: center;
   font-size: 30rpx;
   line-height: 60rpx;
-  
+}
+.imgemoji{
+  height: 0;
+  position: absolute;
+  top: -100000;
 }
 .friends {
   width: 600rpx;
   margin: 0 auto;
   margin-top: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  max-height:240rpx;
+  overflow: hidden;
 }
 .load_more_friends_arrow{
   right: 20px;
@@ -25,13 +33,11 @@
 .face {
   width: 100rpx;
   height: 100rpx;
-  float: left;
   margin: 10rpx;
 }
 .face image {
   width: 100rpx;
   height: 100rpx;
-  border-radius: 50%;
 }
 .btn_zone {
   padding: 30rpx 50rpx;
@@ -62,9 +68,9 @@
 }
 
 /* pages/chat/index.wxss */
-.container{
+.containers{
   background-color: #f1f2f7;
-  padding: 10px;
+  height: 100%;
 }
 .content{
   height: 100%;
@@ -74,7 +80,6 @@ page {
     background-color: #f1f2f7;
     padding-bottom: 150rpx;
     height: 100%;
-    overflow-y: scroll;
 }
 .chat_list {
     width: 630rpx;
@@ -86,6 +91,14 @@ page {
     background-color: #f1f2f7;
     border-radius: 5px;
     box-shadow:  0 0 20px rgba(190,77,43,.2);
+}
+.chat_list_wrap{
+  padding-bottom: 700rpx;
+}
+.bottom_line{
+  text-align: center;
+  padding: 20px 0;
+  color: #ccc;
 }
 
 .chat_face {
@@ -262,10 +275,10 @@ page {
   border-radius: 5px;
   margin-right: 8px;
 }
+
 .reply_input {
   font-size: 17px;
-  min-height: 40px;
-  /* height: 40px;  */
+  height: 40px; 
   padding: 0 12px;
   width: 100%;
   -webkit-box-sizing: border-box;
