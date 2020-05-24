@@ -194,7 +194,7 @@ Page({
       data: addObj,
       success: res => {
         this.setData({
-          chatList: [...chatList, addObj]
+          chatList: [addObj, ...chatList]
         })
         wx.showToast({
           title: '留言成功',
