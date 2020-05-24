@@ -1,5 +1,5 @@
 
-const imageHost = 'https://wedding-ming.oss-cn-beijing.aliyuncs.com/'
+const imageHost = 'https://dev-55f29a.tcb.qcloud.la/'
 
  
 module.exports = {

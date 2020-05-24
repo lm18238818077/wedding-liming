@@ -2,7 +2,7 @@
 
 <view class="container">
     <image src='/images/inv.png' class='inv'></image>
-    <image src='https://wedding-ming.oss-cn-beijing.aliyuncs.com/Z1802250033_007.jpg' class='cover' mode='aspectFill'></image>
+    <image src='https://dev-55f29a.tcb.qcloud.la/Z1802250033_007.jpg' class='cover' mode='aspectFill'></image>
     <view class='datetime' animation="{{animationData}}">
         <view class='box'>
             <view class="name css13610f7ae66601">
